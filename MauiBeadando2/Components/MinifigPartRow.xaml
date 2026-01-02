@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiBeadando2.Components.MinifigPartRow">
+    <Border Stroke="{x:StaticResource Primary}" Padding="5" Margin="5,0,5,5">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="10,10,10,10" />
+        </Border.StrokeShape>
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer
+                Tapped="TapGestureRecognizer_Tapped" />
+        </Border.GestureRecognizers>
+        <Grid RowDefinitions="Auto,*" ColumnDefinitions="Auto,*,Auto">
+            <Label Text="{Binding CategoryString}" Padding="0,0,0,10" Grid.ColumnSpan="2"/>
+            <Image Margin="5" Grid.Row="1" Source="{Binding MinifigPart.part_img_url,
+                                        TargetNullValue=plus_symbol.png,
+                                        FallbackValue=plus_symbol.png}" WidthRequest="60"/>
+            <Label Text="{Binding MinifigPart.name}" Grid.Row="1" Grid.Column="1" VerticalTextAlignment="Center" Padding="10,0,10,0"/>
+            <Button IsEnabled="{Binding DetailsIsEnabled}" Grid.Row="1" Grid.Column="2" Text="Részletek" HeightRequest="45" VerticalOptions="End"/>
+        </Grid>
+    </Border>
+</ContentView>

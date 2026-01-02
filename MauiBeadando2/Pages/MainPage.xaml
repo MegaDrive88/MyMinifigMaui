@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiBeadando2.MainPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+    
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarStyle="LightContent" StatusBarColor="{x:StaticResource Primary}"/>
+        <toolkit:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing"/>
+    </ContentPage.Behaviors>
+    <ScrollView>
+        <CollectionView ItemsSource="{Binding Minifigs}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                         Span="2" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="10" Margin="5">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
+                                          Path=BindingContext.MinifigFrameTapCommand}" CommandParameter="{Binding}" />
+                        </Frame.GestureRecognizers>
+                        <VerticalStackLayout>
+                            <Grid RowDefinitions="50,50,50,50,50" ColumnDefinitions="*,*,*">
+                                <Image Source="{Binding HeadItem.part_img_url}"/>
+                                <Image Source="{Binding HeadPart.part_img_url}" Grid.Row="1"/>
+                                <Image Source="{Binding BackItem.part_img_url}" Grid.Row="2"/>
+                                <Image Source="{Binding TorsoPart.part_img_url}" Grid.Row="3"/>
+                                <Image Source="{Binding LegPart.part_img_url}" Grid.Row="4"/>
+                                <Image Source="{Binding Accessory.part_img_url, 
+                                    TargetNullValue=plus_symbol.png, 
+                                    FallbackValue=plus_symbol.png}" Grid.Row="2" Grid.Column="1"/>
+                            </Grid>
+                            <Label HorizontalOptions="Center" Text="{Binding Name}"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ScrollView>
+
+</ContentPage>
