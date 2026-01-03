@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace MauiBeadando2.Components;
 
-public partial class MinifigPartRow : ContentView, INotifyPropertyChanged {
+public partial class MinifigPartRow : ContentView {
     public static BindableProperty MinifigPartProperty =
         BindableProperty.Create(
             nameof(MinifigPart), 
@@ -36,10 +36,10 @@ public partial class MinifigPartRow : ContentView, INotifyPropertyChanged {
         var control = (MinifigPartRow)bindable;
         control.CategoryString = (PartCategoryEnum)newValue switch {
             PartCategoryEnum.HeadItem => "Fej kiegészítő",
-            PartCategoryEnum.Head => "Fej (kötelező)",
+            PartCategoryEnum.Head => "Fej",
             PartCategoryEnum.BackItem => "Nyak/hát kiegészítő",
-            PartCategoryEnum.Torso => "Test (kötelező)",
-            PartCategoryEnum.Leg => "Lábak (kötelező)",
+            PartCategoryEnum.Torso => "Test",
+            PartCategoryEnum.Leg => "Lábak",
             PartCategoryEnum.Accessory => "Fegyver/szerszám/kiegészítő",
             _ => string.Empty
         };
@@ -81,11 +81,12 @@ public partial class MinifigPartRow : ContentView, INotifyPropertyChanged {
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e) {
         await Shell.Current.GoToAsync("PartSelectorPage", new Dictionary<string, object> {
             { "category", Category },
-            { "categoryString", CategoryString.Split("(")[0].Trim() }
+            { "categoryString", CategoryString }
         });
     }
-    public event PropertyChangedEventHandler PropertyChanged;
-    public void OnPropertyChanged(string tulajdonsagNev) {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(tulajdonsagNev));
+    private async void DetailsBtnClick(object sender, EventArgs e) {
+        await Shell.Current.GoToAsync("PartDetailsPage", new Dictionary<string, object> {
+            { "part", MinifigPart },
+        });
     }
 }

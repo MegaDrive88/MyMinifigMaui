@@ -7,7 +7,8 @@ namespace MauiBeadando2
         public AppShell()
         {
             Routing.RegisterRoute("MinifigBuilderPage", typeof(MinifigBuilderPage));
-            Routing.RegisterRoute("MinifigBuilderPage/PartSelectorPage", typeof(PartSelectorPage));
+            Routing.RegisterRoute("PartSelectorPage", typeof(PartSelectorPage));
+            Routing.RegisterRoute("PartDetailsPage", typeof(PartDetailsPage));
             InitializeComponent();
         }
     }

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using MauiBeadando2.ViewModels;
 using MauiBeadando2.Pages;
+using FFImageLoading.Maui;
 
 
 namespace MauiBeadando2
@@ -14,6 +15,7 @@ namespace MauiBeadando2
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseFFImageLoading()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

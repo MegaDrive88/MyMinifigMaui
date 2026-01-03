@@ -24,7 +24,7 @@ namespace MauiBeadando2.ViewModels {
             if (query.ContainsKey("selectedPart") && CurrentMinifig != null) {
                 var selectedPart = (Part)query["selectedPart"];
                 var category = (PartCategoryEnum)query["partCategory"];
-                
+
                 switch (category) {
                     case PartCategoryEnum.HeadItem:
                         CurrentMinifig.HeadItem = selectedPart;
@@ -56,9 +56,9 @@ namespace MauiBeadando2.ViewModels {
                 CurrentMinifig = temp;
             }
         }
-        
+
         [RelayCommand]
-        public async void BackToMainPage() {
+        public async Task BackToMainPage() {
             await Shell.Current.GoToAsync("//MainPage");
         }
     }

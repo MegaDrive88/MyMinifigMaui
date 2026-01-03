@@ -2,8 +2,43 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiBeadando2.Pages.PartDetailsPage"
-             Title="PartDetailsPage">
-    <VerticalStackLayout>
-        
-    </VerticalStackLayout>
+             xmlns:ff="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
+>
+    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,*" Margin="10">
+        <Label Margin="0,0,0,10" Text="{Binding SelectedPart.name}" HorizontalTextAlignment="Center" HorizontalOptions="Center" Grid.ColumnSpan="2" FontSize="20"/>
+
+        <VerticalStackLayout Grid.Row="1" Margin="0,0,10,0">
+            <ff:CachedImage
+                Source="{Binding SelectedPart.part_img_url}"
+                LoadingPlaceholder="noimg.jpg"
+                ErrorPlaceholder="noimg.jpg"
+                RetryCount="3"
+                HeightRequest="180"
+                Aspect="AspectFill"
+                />
+            <Label Text="{Binding SelectedPart.part_num, StringFormat='Azonosító: {0}'}" FontSize="15" HorizontalTextAlignment="Center"/>
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="1" Grid.Column="1">
+            <CollectionView ItemsSource="{Binding Urls}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Button Text="{Binding Key, StringFormat='{0} oldal'}" Margin="5" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
+                                          Path=BindingContext.OpenUrlCommand}" CommandParameter="{Binding Value}"/>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+        <Border Grid.Row="2" Grid.ColumnSpan="2" Padding="5">
+            <VerticalStackLayout>
+                <Label Text="Szettek, amikben előfordul:"/>
+                <!--<CollectionView ItemsSource="{}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>-->
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
 </ContentPage>

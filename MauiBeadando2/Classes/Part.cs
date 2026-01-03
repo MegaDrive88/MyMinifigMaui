@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace MauiBeadando2.Classes {
@@ -22,11 +23,4 @@ namespace MauiBeadando2.Classes {
             set => external_ids_json = JsonSerializer.Serialize(value);
         }
     }
-    //public class External_Ids {
-    //    public string[]? BrickLink { get; set; }
-    //    public string[]? BrickOwl { get; set; }
-    //    public string[]? Brickset { get; set; }
-    //    public string[]? LDraw { get; set; }
-    //    public string[]? LEGO { get; set; }
-    //}
 }

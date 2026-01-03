@@ -21,7 +21,7 @@ namespace MauiBeadando2.ViewModels {
         public MinifigDatabase Database { get; set; } = new();
 
         [RelayCommand]
-        private async void MinifigFrameTap(object minifig) {
+        private async Task MinifigFrameTap(object minifig) {
             CurrentMinifig = (Minifig)minifig;
 
             await Shell.Current.GoToAsync("MinifigBuilderPage", new Dictionary<string, object>

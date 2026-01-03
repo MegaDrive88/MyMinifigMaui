@@ -2,15 +2,25 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiBeadando2.Pages.PartSelectorPage"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:ff="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
+>
 
     <Grid RowDefinitions="Auto,Auto,*,Auto">
         <Grid ColumnDefinitions="Auto,*,Auto" Margin="5">
             <Button Text="&lt;" CornerRadius="50" HeightRequest="45" FontSize="20" Command="{Binding TurnPageCommand}" CommandParameter="left"/>
             <Button Text="&gt;" CornerRadius="50" HeightRequest="45" FontSize="20" Grid.Column="2" Command="{Binding TurnPageCommand}" CommandParameter="right"/>
-            <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding PageNum, StringFormat='{0}; 20 / oldal'}" HorizontalOptions="Center" FontSize="20"/>
+            <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding PageNum, StringFormat='{0}; 50 / oldal'}" HorizontalOptions="Center" FontSize="20"/>
         </Grid>
-        <Entry FontSize="15" Placeholder="{Binding CategoryString, StringFormat='{0} keresése'}" Grid.Row="1" Margin="5"/>
+        <Grid Grid.Row="1" Margin="5">
+            <Entry FontSize="15" Placeholder="{Binding CategoryString, StringFormat='{0} keresése'}" Text="{Binding SearchbarValue}">
+                <Entry.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="TextChanged"
+                        Command="{Binding SearchbarTypingCommand}"/>
+                </Entry.Behaviors>
+            </Entry>
+        </Grid>
         <CollectionView ItemsSource="{Binding Parts}" Grid.Row="2">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"
@@ -26,7 +36,15 @@
                                         Path=BindingContext.PartTappedCommand}" CommandParameter="{Binding}"/>
                         </Frame.GestureRecognizers>
                         <VerticalStackLayout>
-                            <Image Source="{Binding part_img_url, FallbackValue=noimg.jpg, TargetNullValue=noimg.jpg}"/>
+                            <ff:CachedImage
+                                Source="{Binding part_img_url}"
+                                LoadingPlaceholder="noimg.jpg"
+                                ErrorPlaceholder="noimg.jpg"
+                                RetryCount="3"
+                                HeightRequest="180"
+                                Aspect="AspectFit"
+                                />
+                            <Label Text="{Binding name}" HorizontalOptions="Center"/>
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>

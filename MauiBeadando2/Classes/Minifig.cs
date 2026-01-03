@@ -10,14 +10,11 @@ namespace MauiBeadando2.Classes {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         
-        [NotNull]
+        [NotNull, Unique]
         public string Name { get; set; } = "Új figura";
 
-        [NotNull]
         public string? HeadPartId { get; set; }
-        [NotNull]
         public string? TorsoPartId { get; set; }
-        [NotNull]
         //public string? LegPartId { get => LegPart.part_num; set { LegPartId = value } }
         public string? LegPartId { get; set; }
         public string? HeadItemId { get; set; }
@@ -36,6 +33,7 @@ namespace MauiBeadando2.Classes {
         public Part? BackItem { get; set; }
         [Ignore]
         public Part? Accessory { get; set; }
-
+        [Ignore]
+        public bool IsDeleteReady { get; set; }
     }
 }

@@ -22,19 +22,20 @@ namespace MauiBeadando2.ViewModels {
         string? categoryString;
         [ObservableProperty]
         int pageNum = 1;
+        [ObservableProperty]
+        string searchbarValue = string.Empty;
 
         public void ApplyQueryAttributes(IDictionary<string, object> query) {
             Category = (PartCategoryEnum)query["category"];
             CategoryString = (string)query["categoryString"];
             PageNum = 1;
+            SearchbarValue = "";
             Parts = Task.Run(() => apiService.GetItemsAsync(Category, PageNum)).Result;
-            // Java.Lang.RuntimeException: 'Canvas: trying to use a recycled bitmap android.graphics.Bitmap@bb671a8'
-            //searchbar
         }
 
         [RelayCommand]
-        public async void PartTapped(object part) {
-            await Shell.Current.GoToAsync("MinifigBuilderPage", new Dictionary<string, object> {
+        public async Task PartTapped(object part) {
+            await Shell.Current.GoToAsync("..", new Dictionary<string, object> {
                 { "selectedPart", part },
                 { "partCategory", Category }
             });
@@ -45,15 +46,20 @@ namespace MauiBeadando2.ViewModels {
             if (way == "left") PageNum--;
             else PageNum++;
             try {
-                Parts = Task.Run(() => apiService.GetItemsAsync(Category, PageNum)).Result;
+                Parts = Task.Run(() => apiService.GetItemsAsync(Category, PageNum, SearchbarValue)).Result;
             }
             catch {
                 PageNum = oldPageNum;
             }
         }
         [RelayCommand]
-        public async Task BackButton() {
+        public async void BackButton() {
             await Shell.Current.GoToAsync("..");
+        }
+        [RelayCommand]
+        public void SearchbarTyping() {
+            PageNum = 1;
+            Parts = Task.Run(() => apiService.GetItemsAsync(Category, PageNum, SearchbarValue)).Result;
         }
     }
 }
