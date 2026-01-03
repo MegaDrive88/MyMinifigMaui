@@ -37,6 +37,8 @@ namespace MauiBeadando2.ViewModels {
                 };
                 if (value != "") Urls.Add(id.Key, value);
             }
+            var anyad = Task.Run(()=>apiService.GetSetsAsync(SelectedPart)).Result;
+            //benne vannak
         }
         #region TODO
         /* SQLite mentes torles stb

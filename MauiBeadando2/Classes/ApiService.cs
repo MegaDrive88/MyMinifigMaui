@@ -23,11 +23,28 @@ namespace MauiBeadando2.Classes {
 
             return new(data.Results ?? []);
         }
-        private async Task<ObservableCollection<Set>> GetSetsAsync(Part part) {
-            var colorsResponse = await _httpClient.GetAsync($"{url}{part.part_num}/colors/?key={_apiKey}");
+        public async Task<ObservableCollection<Set>> GetSetsAsync(Part part) {
+            var colorsResponse = await _httpClient.GetAsync($"{url}{part.part_num}/colors/?key={_apiKey}"); // kulon fv?
             colorsResponse.EnsureSuccessStatusCode();
-            return new();
+            string colorjson = await colorsResponse.Content.ReadAsStringAsync();
+            var colorData = JsonSerializer.Deserialize<Response<PartColor>>(
+                colorjson,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+
+            ObservableCollection<Set> result = new();
+            foreach (PartColor color in colorData.Results) {
+                var response = await _httpClient.GetAsync($"{url}{part.part_num}/colors/{color.color_id}/sets/?key={_apiKey}"); // kulon fv?
+                response.EnsureSuccessStatusCode();
+                string json = await response.Content.ReadAsStringAsync();
+                var data = JsonSerializer.Deserialize<Response<Set>>(
+                    json,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                result = new(result.Concat(data.Results));
+            }
+            return result;
         }
+
         //get /api/v3/lego/parts/{part_num}/colors/
         //get /api/v3/lego/parts/{part_num}/colors/{color_id}/sets/
 
