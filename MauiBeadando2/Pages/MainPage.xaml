@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiBeadando2.MainPage"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
-    
+
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarStyle="LightContent" StatusBarColor="{x:StaticResource Primary}"/>
         <toolkit:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing"/>
@@ -23,25 +23,65 @@
                             Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
                                           Path=BindingContext.MinifigFrameTapCommand}" CommandParameter="{Binding}" />
                         </Frame.GestureRecognizers>
-                        <VerticalStackLayout>
-                            <Grid RowDefinitions="50,50,50,50,50,50" ColumnDefinitions="Auto,Auto" HorizontalOptions="Center">
-                                <Image Source="{Binding HeadItem.part_img_url}"/>
-                                <Image Source="{Binding HeadwearAccessory.part_img_url}" Grid.Column="1"/>
-                                <Image Source="{Binding HeadPart.part_img_url}" Grid.ColumnSpan="2" Grid.Row="1"/>
-                                <Image Source="{Binding BackItem.part_img_url}" Grid.ColumnSpan="2" Grid.Row="2"/>
-                                <Image Source="{Binding TorsoPart.part_img_url}" Grid.Row="3"/>
-                                <Image Source="{Binding TorsoPart.part_img_url}" Grid.Row="3"/>
-                                <Image Source="{Binding Hipwear.part_img_url}" Grid.ColumnSpan="2" Grid.Row="4"/>
-                                <Image Source="{Binding LegPart.part_img_url}" Grid.ColumnSpan="2" Grid.Row="5"/>
-                                <Image Source="{Binding Accessory.part_img_url}" Grid.Row="3" Grid.Column="1"/>
-                                <Image Source="plus_symbol.png" Grid.Row="2" Grid.ColumnSpan="2" IsVisible="{Binding IsDeleteReady, Converter={toolkit:InvertedBoolConverter}}"/>
-                            </Grid>
-                            <Grid Margin="0,5,0,0">
-                                <Button BackgroundColor="DarkRed" TextColor="White" Text="🗑" HorizontalOptions="End" IsVisible="{Binding IsDeleteReady}" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
+                        <Grid RowDefinitions="*,Auto">
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <VerticalStackLayout.Resources>
+                                    <Style TargetType="Image">
+                                        <Setter Property="WidthRequest" Value="50"/>
+                                    </Style>
+                                </VerticalStackLayout.Resources>
+                                <HorizontalStackLayout HorizontalOptions="Center">
+                                    <Image Source="{Binding HeadItem.part_img_url}" WidthRequest="0">
+                                        <Image.Triggers>
+                                            <DataTrigger TargetType="Image" 
+                                                         Binding="{Binding HeadItem.part_img_url, Converter={toolkit:IsStringNotNullOrEmptyConverter}}" 
+                                                         Value="True">
+                                                <Setter Property="WidthRequest" Value="50"/>
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                    <Image Source="{Binding HeadwearAccessory.part_img_url}" WidthRequest="0">
+                                        <Image.Triggers>
+                                            <DataTrigger TargetType="Image" 
+                                                         Binding="{Binding HeadwearAccessory.part_img_url, Converter={toolkit:IsStringNotNullOrEmptyConverter}}" 
+                                                         Value="True">
+                                                <Setter Property="WidthRequest" Value="50"/>
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                </HorizontalStackLayout>
+                                <Image Source="{Binding HeadPart.part_img_url}"/>
+                                <Image Source="{Binding BackItem.part_img_url}"/>
+                                <HorizontalStackLayout HorizontalOptions="Center">
+                                    <Image Source="{Binding TorsoPart.part_img_url}" WidthRequest="0">
+                                        <Image.Triggers>
+                                            <DataTrigger TargetType="Image" 
+                                                         Binding="{Binding TorsoPart.part_img_url, Converter={toolkit:IsStringNotNullOrEmptyConverter}}" 
+                                                         Value="True">
+                                                <Setter Property="WidthRequest" Value="50"/>
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                    <Image Source="{Binding Accessory.part_img_url}" WidthRequest="0">
+                                        <Image.Triggers>
+                                            <DataTrigger TargetType="Image" 
+                                                         Binding="{Binding Accessory.part_img_url, Converter={toolkit:IsStringNotNullOrEmptyConverter}}" 
+                                                         Value="True">
+                                                <Setter Property="WidthRequest" Value="50"/>
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                </HorizontalStackLayout>
+                                <Image Source="{Binding Hipwear.part_img_url}"/>
+                                <Image Source="{Binding LegPart.part_img_url}"/>
+                                <Image Margin="0,100,0,100" Source="plus_symbol.png" IsVisible="{Binding IsDeleteReady, Converter={toolkit:InvertedBoolConverter}}"/>
+                            </VerticalStackLayout>
+                            <Grid Margin="0,5,0,0" Grid.Row="1" MinimumHeightRequest="45">
+                                <Button HeightRequest="45" BackgroundColor="DarkRed" TextColor="White" Text="🗑" HorizontalOptions="End" IsVisible="{Binding IsDeleteReady}" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
                                           Path=BindingContext.DeleteFigureCommand}" CommandParameter="{Binding}"/>
                                 <Label VerticalOptions="Center" LineBreakMode="WordWrap" Text="{Binding Name}" Margin="0,0,5,0"/>
-                            </Grid>                            
-                        </VerticalStackLayout>
+                            </Grid>
+                        </Grid>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
