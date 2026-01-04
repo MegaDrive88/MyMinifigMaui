@@ -30,6 +30,7 @@ namespace MauiBeadando2.Database {
             
             foreach (var minifig in minifigs) {
                 await LoadMinifigParts(minifig);
+                minifig.IsDeleteReady = true;
             }
             
             return new ObservableCollection<Minifig>(minifigs);
@@ -53,39 +54,49 @@ namespace MauiBeadando2.Database {
             
             if (!string.IsNullOrEmpty(minifig.AccessoryId))
                 minifig.Accessory = await database!.FindAsync<Part>(minifig.AccessoryId);
+            
+            if (!string.IsNullOrEmpty(minifig.HeadwearAccessoryId))
+                minifig.HeadwearAccessory = await database!.FindAsync<Part>(minifig.HeadwearAccessoryId);
+            
+            if (!string.IsNullOrEmpty(minifig.HipwearId))
+                minifig.Hipwear = await database!.FindAsync<Part>(minifig.HipwearId);
         }
 
         public async Task<int> SaveMinifigAsync(Minifig minifig) {
             await Init();
-            
+
+            minifig.HeadPartId = minifig.HeadPart?.part_num;
+            minifig.TorsoPartId = minifig.TorsoPart?.part_num;
+            minifig.LegPartId = minifig.LegPart?.part_num;
+            minifig.HeadItemId = minifig.HeadItem?.part_num;
+            minifig.BackItemId = minifig.BackItem?.part_num;
+            minifig.AccessoryId = minifig.Accessory?.part_num;
+            minifig.HeadwearAccessoryId = minifig.HeadwearAccessory?.part_num;
+            minifig.HipwearId = minifig.Hipwear?.part_num;
+
             if (minifig.HeadPart != null) {
                 await database!.InsertOrReplaceAsync(minifig.HeadPart);
-                minifig.HeadPartId = minifig.HeadPart.part_num;
             }
-            
             if (minifig.TorsoPart != null) {
                 await database!.InsertOrReplaceAsync(minifig.TorsoPart);
-                minifig.TorsoPartId = minifig.TorsoPart.part_num;
             }
-            
             if (minifig.LegPart != null) {
                 await database!.InsertOrReplaceAsync(minifig.LegPart);
-                minifig.LegPartId = minifig.LegPart.part_num;
             }
-            
             if (minifig.HeadItem != null) {
                 await database!.InsertOrReplaceAsync(minifig.HeadItem);
-                minifig.HeadItemId = minifig.HeadItem.part_num;
             }
-            
             if (minifig.BackItem != null) {
                 await database!.InsertOrReplaceAsync(minifig.BackItem);
-                minifig.BackItemId = minifig.BackItem.part_num;
             }
-            
             if (minifig.Accessory != null) {
                 await database!.InsertOrReplaceAsync(minifig.Accessory);
-                minifig.AccessoryId = minifig.Accessory.part_num;
+            }
+            if (minifig.HeadwearAccessory != null) {
+                await database!.InsertOrReplaceAsync(minifig.HeadwearAccessory);
+            }
+            if (minifig.Hipwear != null) {
+                await database!.InsertOrReplaceAsync(minifig.Hipwear);
             }
             
             if (minifig.Id == 0)

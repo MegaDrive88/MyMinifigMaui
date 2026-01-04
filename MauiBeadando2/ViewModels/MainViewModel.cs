@@ -34,5 +34,17 @@ namespace MauiBeadando2.ViewModels {
             Minifigs = Task.Run(Database.GetAllItemsAsync).Result;
             Minifigs.Add(new());
         }
+        [RelayCommand]
+        public async Task DeleteFigure(Minifig minifig) {
+            if (await Application.Current.MainPage.DisplayAlert(
+                "Törlés megerősítése",
+                $"Biztosan törölni szeretnéd a(z) '{minifig.Name}' figurát?",
+                "Igen",
+                "Nem")) {
+                await Database.DeleteMinifigAsync(minifig);
+                Appearing();
+            }
+            
+        }
     }
 }

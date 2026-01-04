@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using MauiBeadando2.ViewModels;
 using MauiBeadando2.Pages;
 using FFImageLoading.Maui;
-
+using MauiBeadando2.Database;
 
 namespace MauiBeadando2
 {
@@ -22,6 +22,9 @@ namespace MauiBeadando2
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
             SecureStorage.Default.SetAsync("API_KEY", "52ceebc4d805283cb30c451d693e2716");
+            //if (File.Exists(DatabaseConstants.DatabasePath)) {
+            //    File.Delete(DatabaseConstants.DatabasePath);
+            //}
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

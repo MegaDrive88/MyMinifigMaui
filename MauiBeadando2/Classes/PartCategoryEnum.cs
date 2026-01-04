@@ -11,6 +11,8 @@ namespace MauiBeadando2.Classes {
         Leg = 61,
         HeadItem = 65,
         BackItem = 71,
-        Accessory = 73
+        Accessory = 73,
+        HeadwearAccessory = 72,
+        Hipwear = 70
     }
 }

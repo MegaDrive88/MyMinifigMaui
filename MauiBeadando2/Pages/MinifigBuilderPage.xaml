@@ -9,24 +9,28 @@
                 <Grid>
                     <Entry Text="{Binding CurrentMinifig.Name}" Placeholder="Figura neve" HorizontalTextAlignment="Center" FontSize="20"/>
                 </Grid>
-                <Grid RowDefinitions="*,*,*,*,*,*">
+                <Grid RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="*,*">
                     <components:MinifigPartRow MinifigPart="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
-                                          Path=BindingContext.CurrentMinifig.HeadItem}" Category="HeadItem"/>
+                                        Path=BindingContext.CurrentMinifig.HeadItem}" Category="HeadItem"/>
+                    <components:MinifigPartRow MinifigPart="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
+                                        Path=BindingContext.CurrentMinifig.HeadwearAccessory}" Category="HeadwearAccessory" Grid.Column="1"/>
                     <components:MinifigPartRow Grid.Row="1" MinifigPart="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
-                                          Path=BindingContext.CurrentMinifig.HeadPart}" Category="Head"/>
+                                          Path=BindingContext.CurrentMinifig.HeadPart}" Category="Head" Grid.ColumnSpan="2"/>
                     <components:MinifigPartRow Grid.Row="2" MinifigPart="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
-                                          Path=BindingContext.CurrentMinifig.BackItem}" Category="BackItem"/>
+                                          Path=BindingContext.CurrentMinifig.BackItem}" Category="BackItem" Grid.ColumnSpan="2"/>
                     <components:MinifigPartRow Grid.Row="3" MinifigPart="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
-                                          Path=BindingContext.CurrentMinifig.Accessory}" Category="Accessory"/>
-                    <components:MinifigPartRow Grid.Row="4" MinifigPart="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
+                                          Path=BindingContext.CurrentMinifig.Accessory}" Category="Accessory" Grid.Column="1"/>
+                    <components:MinifigPartRow Grid.Row="3" MinifigPart="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
                                           Path=BindingContext.CurrentMinifig.TorsoPart}" Category="Torso"/>
+                    <components:MinifigPartRow Grid.Row="4" MinifigPart="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
+                                          Path=BindingContext.CurrentMinifig.Hipwear}" Category="Hipwear" Grid.ColumnSpan="2"/>
                     <components:MinifigPartRow Grid.Row="5" MinifigPart="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
-                                          Path=BindingContext.CurrentMinifig.LegPart}" Category="Leg"/>
+                                          Path=BindingContext.CurrentMinifig.LegPart}" Category="Leg" Grid.ColumnSpan="2"/>
                 </Grid>
             </VerticalStackLayout>
         </ScrollView>
         <Grid ColumnDefinitions="*,*" Grid.Row="1" Margin="0,0,0,10">
-            <Button Text="Mentés" Margin="5"/>
+            <Button Text="Mentés" Margin="5" Command="{Binding SaveButtonCommand}"/>
             <Button Text="Vissza" Grid.Column="1" Margin="5" Command="{Binding BackToMainPageCommand}"/>
 
         </Grid>

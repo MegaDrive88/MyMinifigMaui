@@ -15,12 +15,13 @@ namespace MauiBeadando2.Classes {
 
         public string? HeadPartId { get; set; }
         public string? TorsoPartId { get; set; }
-        //public string? LegPartId { get => LegPart.part_num; set { LegPartId = value } }
         public string? LegPartId { get; set; }
         public string? HeadItemId { get; set; }
         public string? BackItemId { get; set; }
         public string? AccessoryId { get; set; }
-        
+        public string? HeadwearAccessoryId { get; set; }
+        public string? HipwearId { get; set; }
+
         [Ignore]
         public Part? HeadPart { get; set; }
         [Ignore]
@@ -34,6 +35,10 @@ namespace MauiBeadando2.Classes {
         [Ignore]
         public Part? Accessory { get; set; }
         [Ignore]
-        public bool IsDeleteReady { get; set; }
+        public Part? HeadwearAccessory { get; set; }
+        [Ignore]
+        public Part? Hipwear { get; set; }
+        [Ignore]
+        public bool IsDeleteReady { get; set; } = false;
     }
 }

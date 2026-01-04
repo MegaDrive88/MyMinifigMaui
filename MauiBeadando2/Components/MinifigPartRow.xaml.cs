@@ -35,12 +35,14 @@ public partial class MinifigPartRow : ContentView {
     private static void OnCategoryChanged(BindableObject bindable, object oldValue, object newValue) {
         var control = (MinifigPartRow)bindable;
         control.CategoryString = (PartCategoryEnum)newValue switch {
-            PartCategoryEnum.HeadItem => "Fej kiegészítő",
+            PartCategoryEnum.HeadItem => "Fejviselet",
             PartCategoryEnum.Head => "Fej",
             PartCategoryEnum.BackItem => "Nyak/hát kiegészítő",
             PartCategoryEnum.Torso => "Test",
             PartCategoryEnum.Leg => "Lábak",
             PartCategoryEnum.Accessory => "Fegyver/szerszám/kiegészítő",
+            PartCategoryEnum.HeadwearAccessory => "Fejviselet kiegészítő",
+            PartCategoryEnum.Hipwear => "Csípő kiegészítő",
             _ => string.Empty
         };
     }
@@ -88,5 +90,9 @@ public partial class MinifigPartRow : ContentView {
         await Shell.Current.GoToAsync("PartDetailsPage", new Dictionary<string, object> {
             { "part", MinifigPart },
         });
+    }
+
+    private void DeleteClicked(object sender, EventArgs e) {
+        MinifigPart = null;
     }
 }

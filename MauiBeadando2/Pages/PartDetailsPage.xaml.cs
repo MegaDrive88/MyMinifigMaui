@@ -6,8 +6,6 @@ public partial class PartDetailsPage : ContentPage {
     public PartDetailsPage(PartDetailsViewModel vm) {
         InitializeComponent();
         BindingContext = vm;
-        Shell.SetBackButtonBehavior(this, new BackButtonBehavior {
-            IsVisible = false
-        });
+        Shell.SetForegroundColor(this, Colors.Yellow);
     }
 }

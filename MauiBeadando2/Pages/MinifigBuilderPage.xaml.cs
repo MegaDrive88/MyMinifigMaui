@@ -4,12 +4,18 @@ namespace MauiBeadando2.Pages;
 
 public partial class MinifigBuilderPage : ContentPage
 {
-	public MinifigBuilderPage(MinifigBuilderViewModel vm)
+    MinifigBuilderViewModel _viewModel;
+    public MinifigBuilderPage(MinifigBuilderViewModel vm)
 	{
 		InitializeComponent();
 		BindingContext = vm;
+        _viewModel = vm;
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior {
             IsVisible = false
         });
+    }
+    protected override bool OnBackButtonPressed() {
+        _viewModel.SaveButtonCommand.Execute(null);
+        return true;
     }
 }

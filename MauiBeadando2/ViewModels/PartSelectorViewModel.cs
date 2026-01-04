@@ -11,8 +11,6 @@ using System.Threading.Tasks;
 
 namespace MauiBeadando2.ViewModels {
     public partial class PartSelectorViewModel : ObservableObject, IQueryAttributable {
-        private ApiService apiService = new();
-
         [ObservableProperty]
         ObservableCollection<Part> parts;
 
@@ -30,7 +28,7 @@ namespace MauiBeadando2.ViewModels {
             CategoryString = (string)query["categoryString"];
             PageNum = 1;
             SearchbarValue = "";
-            Parts = Task.Run(() => apiService.GetItemsAsync(Category, PageNum)).Result;
+            Parts = Task.Run(() => ApiService<Part>.GetItemsAsync(Category, PageNum)).Result;
         }
 
         [RelayCommand]
@@ -46,7 +44,7 @@ namespace MauiBeadando2.ViewModels {
             if (way == "left") PageNum--;
             else PageNum++;
             try {
-                Parts = Task.Run(() => apiService.GetItemsAsync(Category, PageNum, SearchbarValue)).Result;
+                Parts = Task.Run(() => ApiService<Part>.GetItemsAsync(Category, PageNum, SearchbarValue)).Result;
             }
             catch {
                 PageNum = oldPageNum;
@@ -59,7 +57,7 @@ namespace MauiBeadando2.ViewModels {
         [RelayCommand]
         public void SearchbarTyping() {
             PageNum = 1;
-            Parts = Task.Run(() => apiService.GetItemsAsync(Category, PageNum, SearchbarValue)).Result;
+            Parts = Task.Run(() => ApiService<Part>.GetItemsAsync(Category, PageNum, SearchbarValue)).Result;
         }
     }
 }

@@ -10,13 +10,20 @@
             <TapGestureRecognizer
                 Tapped="TapGestureRecognizer_Tapped" />
         </Border.GestureRecognizers>
-        <Grid RowDefinitions="Auto,*" ColumnDefinitions="Auto,*,Auto">
+        <Grid RowDefinitions="Auto,*" ColumnDefinitions="Auto,*">
             <Label Text="{Binding CategoryString}" Padding="0,0,0,10" Grid.ColumnSpan="2"/>
             <Image Margin="5" Grid.Row="1" Source="{Binding MinifigPart.part_img_url,
                                         TargetNullValue=plus_symbol.png,
                                         FallbackValue=plus_symbol.png}" WidthRequest="60"/>
-            <Label Text="{Binding MinifigPart.name}" Grid.Row="1" Grid.Column="1" VerticalTextAlignment="Center" Padding="10,0,10,0"/>
-            <Button IsEnabled="{Binding DetailsIsEnabled}" Grid.Row="1" Grid.Column="2" Text="Részletek" HeightRequest="45" VerticalOptions="End" Clicked="DetailsBtnClick"/>
+            <FlexLayout Grid.Row="1" Grid.Column="1" Direction="Row" 
+            Wrap="Wrap"
+            JustifyContent="End"
+            AlignItems="End"
+            VerticalOptions="End">
+                <Button IsEnabled="{Binding DetailsIsEnabled}" Text="Részletek" HeightRequest="45" VerticalOptions="End" Clicked="DetailsBtnClick" HorizontalOptions="End" WidthRequest="100" Margin="1"/>
+                <Button IsEnabled="{Binding DetailsIsEnabled}" Text="Törlés" HeightRequest="45" VerticalOptions="End" HorizontalOptions="End" WidthRequest="100" Grid.Row="1" Grid.Column="1" Margin="1" BackgroundColor="DarkRed" TextColor="White" Clicked="DeleteClicked"/>
+            </FlexLayout>
+            
         </Grid>
     </Border>
 </ContentView>

@@ -13,13 +13,14 @@ using static System.Net.WebRequestMethods;
 
 namespace MauiBeadando2.ViewModels {
     public partial class PartDetailsViewModel : ObservableObject, IQueryAttributable {
-        private ApiService apiService = new();
-
         [ObservableProperty]
         Part selectedPart;
 
         [ObservableProperty]
         Dictionary<string, string> urls;
+
+        [ObservableProperty]
+        ObservableCollection<Set> sets = new();
 
         public void ApplyQueryAttributes(IDictionary<string, object> query) {
             SelectedPart = (Part)query["part"];
@@ -37,15 +38,11 @@ namespace MauiBeadando2.ViewModels {
                 };
                 if (value != "") Urls.Add(id.Key, value);
             }
-            var anyad = Task.Run(()=>apiService.GetSetsAsync(SelectedPart)).Result;
-            //benne vannak
+            Sets = Task.Run(()=>ApiService<Set>.GetSetsAsync(SelectedPart)).Result;
         }
         #region TODO
-        /* SQLite mentes torles stb
-         * elemek torlese builder oldalon
-         * Details oldal
+        /*
          * bugfixek
-         * mentes haromszog gombnal
          * feature - kedvencek - ha van ra ido
         */
         #endregion

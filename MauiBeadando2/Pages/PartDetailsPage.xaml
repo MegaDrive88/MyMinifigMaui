@@ -4,7 +4,7 @@
              x:Class="MauiBeadando2.Pages.PartDetailsPage"
              xmlns:ff="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
 >
-    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,*" Margin="10">
+    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,*" Margin="10,0,10,10">
         <Label Margin="0,0,0,10" Text="{Binding SelectedPart.name}" HorizontalTextAlignment="Center" HorizontalOptions="Center" Grid.ColumnSpan="2" FontSize="20"/>
 
         <VerticalStackLayout Grid.Row="1" Margin="0,0,10,0">
@@ -23,22 +23,34 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Button Text="{Binding Key, StringFormat='{0} oldal'}" Margin="5" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
-                                          Path=BindingContext.OpenUrlCommand}" CommandParameter="{Binding Value}"/>
+                                          Path=BindingContext.OpenUrlCommand}" CommandParameter="{Binding Value}" HeightRequest="40"/>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </VerticalStackLayout>
-        <Border Grid.Row="2" Grid.ColumnSpan="2" Padding="5">
-            <VerticalStackLayout>
-                <Label Text="Szettek, amikben előfordul:"/>
-                <!--<CollectionView ItemsSource="{}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>-->
-            </VerticalStackLayout>
-        </Border>
+        <Grid RowDefinitions="Auto,*"  Grid.Row="2" Grid.ColumnSpan="2" >
+            <Label Text="Szettek, amikben előfordul:" Margin="0,0,0,5"/>
+            <CollectionView ItemsSource="{Binding Sets}" Grid.Row="1">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="5">
+                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,*">
+                                <ff:CachedImage
+                                Source="{Binding set_img_url}"
+                                LoadingPlaceholder="noimg.jpg"
+                                ErrorPlaceholder="noimg.jpg"
+                                RetryCount="3"
+                                WidthRequest="150"
+                                Aspect="AspectFit" Grid.RowSpan="3" VerticalOptions="Start"/>
+                                <Label Text="{Binding name}" LineBreakMode="WordWrap" Grid.Column="1" Margin="5,0,0,0"/>
+                                <Label Text="{Binding set_num}" LineBreakMode="WordWrap" Grid.Column="1" Grid.Row="1" Margin="5,0,0,0"/>
+                                <Button Text="Rebrickable oldal" Grid.Column="1" Grid.Row="2" HeightRequest="50" VerticalOptions="End" Margin="5" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
+                                          Path=BindingContext.OpenUrlCommand}" CommandParameter="{Binding set_url}"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
     </Grid>
 </ContentPage>
