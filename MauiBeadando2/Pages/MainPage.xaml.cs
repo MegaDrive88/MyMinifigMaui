@@ -6,6 +6,7 @@ namespace MauiBeadando2
     {
         public MainPage(MainViewModel vm) {
             InitializeComponent();
+            App.CheckConnection();
             BindingContext = vm;
         }
     }

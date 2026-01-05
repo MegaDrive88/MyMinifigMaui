@@ -8,7 +8,8 @@ public partial class MinifigBuilderPage : ContentPage
     public MinifigBuilderPage(MinifigBuilderViewModel vm)
 	{
 		InitializeComponent();
-		BindingContext = vm;
+        App.CheckConnection();
+        BindingContext = vm;
         _viewModel = vm;
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior {
             IsVisible = false

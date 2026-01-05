@@ -5,6 +5,7 @@ namespace MauiBeadando2.Pages;
 public partial class PartDetailsPage : ContentPage {
     public PartDetailsPage(PartDetailsViewModel vm) {
         InitializeComponent();
+        App.CheckConnection();
         BindingContext = vm;
         Shell.SetForegroundColor(this, Colors.Yellow);
     }

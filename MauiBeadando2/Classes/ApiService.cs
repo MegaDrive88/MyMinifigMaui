@@ -27,14 +27,19 @@ namespace MauiBeadando2.Classes {
             var _httpClient = new HttpClient();
             string _apiKey = await SecureStorage.GetAsync("API_KEY");
             string url = "https://rebrickable.com/api/v3/lego/parts/";
-            var response = await _httpClient.GetAsync($"{url}{endpoint}?key={_apiKey}{param}");
-            response.EnsureSuccessStatusCode();
-            string json = await response.Content.ReadAsStringAsync();
-            var data = JsonSerializer.Deserialize<Response<T>>(
-                json,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            try {
+                var response = await _httpClient.GetAsync($"{url}{endpoint}?key={_apiKey}{param}");
+                response.EnsureSuccessStatusCode();
+                string json = await response.Content.ReadAsStringAsync();
+                var data = JsonSerializer.Deserialize<Response<T>>(
+                    json,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            return data.Results;
+                return data.Results;
+            }
+            catch {
+                return new List<T>();
+            }
         }
 
         //https://rebrickable.com/api/v3/swagger/?key=52ceebc4d805283cb30c451d693e2716#!/lego/lego_sets_parts_list

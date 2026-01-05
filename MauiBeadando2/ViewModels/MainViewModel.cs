@@ -44,7 +44,6 @@ namespace MauiBeadando2.ViewModels {
                 await Database.DeleteMinifigAsync(minifig);
                 Appearing();
             }
-            
         }
     }
 }
